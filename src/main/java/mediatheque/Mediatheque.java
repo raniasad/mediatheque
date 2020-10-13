@@ -10,12 +10,12 @@ public class Mediatheque {
 	public static void main(String[] args) {
 		Mediatheque mediatheque = new Mediatheque();
 		
-		mediatheque.addItem( new Book("J.R.R. Tolkien", "Le seigneur des anneaux"));
-		mediatheque.addItem( new Book("Philip K. Dick", "Le Maître du haut chateau"));
-		mediatheque.addItem( new CD(12, "Sergeant Peppers"));
+		mediatheque.addItem( new Book("J.R.R. Tolkien", "Le seigneur des anneaux") {});
+		mediatheque.addItem( new Book("Philip K. Dick", "Le Maître du haut chateau") {});
+		mediatheque.addItem( new CD(12, "Sergeant Peppers") {});
 		mediatheque.printCatalog();
-		//mediatheque.printOnlyBooks();
-		//mediatheque.printOnlyCDs();		
+		mediatheque.printOnlyBooks();
+		mediatheque.printOnlyCDs();		
 	}
 	
 	public void addItem(Item i) {
@@ -23,12 +23,17 @@ public class Mediatheque {
 	}
 	
 	public void printCatalog() {
-		for (Item i : items)
+		for (Item i : items){
 			System.out.println(i);
 	}
+        }
+        
 	
 	public void printOnlyBooks() {
-		throw new UnsupportedOperationException("Not supported yet."); 
+            ItemVisitor visitor=new BookVisitorImpl();
+		for (Item i : items){
+			i.accept(visitor);
+	}
 		/*
 		//avec instanceof
 		for (Item i : items)
@@ -36,9 +41,17 @@ public class Mediatheque {
 				System.out.println(i);
 		*/
 	}
+        
 
 	public void printOnlyCDs() {
-		throw new UnsupportedOperationException("Not supported yet."); 
+		   ItemVisitor visitor=new CDVisitorImpl();
+		for (Item i : items){
+			i.accept(visitor);
 	}
-
+	}
+public void accept(ItemVisitor v){
+            for (Item i : items){
+                i.accept(v);
+            }
+        }
 }

@@ -1,6 +1,6 @@
 package mediatheque;
 
-public class CD extends Item {
+public abstract class CD extends Item {
 	private int numberOfTracks;
 
 	public CD(int numberOfTracks, String title) {
@@ -19,6 +19,10 @@ public class CD extends Item {
 	@Override
 	public String toString() {
 		return "CD{" + super.toString() + ",numberOfTracks=" + numberOfTracks + '}';
+	}
+
+        public void accept(ItemVisitor visitor) {
+		visitor.visit(this);
 	}
 	
 	

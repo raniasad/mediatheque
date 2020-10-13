@@ -2,7 +2,7 @@
 package mediatheque;
 
 
-public class Book extends Item {
+public abstract class Book extends Item {
 	private String author;
 
 	public Book(String author, String title) {
@@ -22,6 +22,8 @@ public class Book extends Item {
 	public String toString() {
 		return "Book{" + super.toString() + ", author=" + author + '}';
 	}
-	
+	public void accept(ItemVisitor visitor) {
+            visitor.visit(this);
+	}
 	
 }
